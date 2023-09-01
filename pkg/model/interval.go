@@ -1,9 +1,11 @@
 package model
 
+import "gorm.io/gorm"
+
 type Interval struct {
-	ID        uint   `json:"id" gorm:"primaryKey"`
+	gorm.Model
 	StartAt   string `json:"started_at"`
 	StoppedAt string `json:"stopped_at"`
 	EndAt     string `json:"ended_at"`
-	Tasks     []uint `json:"tasks"`
+	Tasks     []Task `json:"tasks"`
 }

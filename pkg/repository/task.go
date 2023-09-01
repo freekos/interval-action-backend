@@ -14,7 +14,7 @@ func (repo *Repository) CreateTask(title string, description string, intervalId 
 
 	var interval model.Interval
 	if repo.db.First(&interval, intervalId).Error == nil {
-		interval.Tasks = append(interval.Tasks, task.ID)
+		interval.Tasks = append(interval.Tasks, task)
 		repo.db.Save(&interval)
 	}
 
