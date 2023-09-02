@@ -22,9 +22,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    environment:
-      DB_URL: postgres://postgres:postgres@db:5432/postgres
-      PORT: 8080
     ports:
       - 8080:8080
     depends_on:
