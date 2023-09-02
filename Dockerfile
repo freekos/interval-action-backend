@@ -7,6 +7,7 @@ RUN go mod download
 
 COPY . .
 
+ENV DB_URL=postgres://postgres:postgres@db:5432/postgres
 ENV PORT=8080
 
 RUN go build -o build ./cmd
