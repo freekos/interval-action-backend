@@ -1,0 +1,220 @@
+basePath: /api/v1
+definitions:
+  model.IntervalResponse:
+    properties:
+      end_at:
+        type: string
+      id:
+        type: integer
+      start_at:
+        type: string
+      stopped_at:
+        type: string
+    type: object
+  model.TaskResponse:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      interval_id:
+        type: integer
+      title:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  title: Interval-Action API
+  version: 0.0.20
+paths:
+  /intervals:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of all intervals
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of intervals
+          schema:
+            items:
+              $ref: '#/definitions/model.IntervalResponse'
+            type: array
+      summary: Get all intervals
+      tags:
+      - Intervals
+    post:
+      consumes:
+      - application/json
+      description: Create a new interval with the given start and end times
+      parameters:
+      - description: Start time
+        in: body
+        name: start_at
+        required: true
+        schema:
+          type: string
+      - description: End time
+        in: body
+        name: end_at
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully created interval
+          schema:
+            $ref: '#/definitions/model.IntervalResponse'
+      summary: Create a new interval
+      tags:
+      - Intervals
+  /intervals/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get an interval by its ID
+      parameters:
+      - description: Interval ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Interval details
+          schema:
+            $ref: '#/definitions/model.IntervalResponse'
+      summary: Get an interval by ID
+      tags:
+      - Intervals
+    put:
+      consumes:
+      - application/json
+      description: Stop an interval by its ID
+      parameters:
+      - description: Interval ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Stop time
+        in: body
+        name: stopped_at
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully stopped interval
+          schema:
+            $ref: '#/definitions/model.IntervalResponse'
+      summary: Stop an interval by ID
+      tags:
+      - Intervals
+  /tasks:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of tasks by the provided interval ID
+      parameters:
+      - description: Interval ID
+        in: query
+        name: interval_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.TaskResponse'
+            type: array
+      summary: Get tasks by interval ID
+      tags:
+      - Tasks
+    post:
+      consumes:
+      - application/json
+      description: Create a new task with the provided title, description, and interval
+        ID
+      parameters:
+      - description: Task title
+        in: body
+        name: title
+        required: true
+        schema:
+          type: string
+      - description: Task description
+        in: body
+        name: description
+        required: true
+        schema:
+          type: string
+      - description: Interval ID
+        in: body
+        name: interval_id
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TaskResponse'
+      summary: Create a new task
+      tags:
+      - Tasks
+  /tasks/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a task by its ID
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TaskResponse'
+      summary: Delete a task by ID
+      tags:
+      - Tasks
+    get:
+      consumes:
+      - application/json
+      description: Get a task by its ID
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TaskResponse'
+      summary: Get a task by ID
+      tags:
+      - Tasks
+swagger: "2.0"
