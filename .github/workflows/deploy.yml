@@ -32,4 +32,4 @@ jobs:
           sudo docker pull gazizbolat/interval-action-backend:latest
           sudo docker stop api
           sudo docker rm api
-          sudo docker run -d --name api --network api -p 8080:8080 gazizbolat/interval-action-backend:latest
+          sudo docker run -d --name api --network api -p 8080:8080 -e DB_URL=${{ secrets.DB_URL }} gazizbolat/interval-action-backend:latest
