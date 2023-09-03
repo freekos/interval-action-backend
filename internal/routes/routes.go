@@ -4,6 +4,8 @@ import (
 	"interval-action/pkg/repository"
 
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 type Route struct {
@@ -18,15 +20,15 @@ type Response struct {
 
 func Init(repository *repository.Repository) *gin.Engine {
 	r := gin.Default()
-
 	route := Route{repository}
 
+	r.GET("docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	api := r.Group("/api")
 	{
 		v1 := api.Group("/v1")
 		{
 			v1.POST("/intervals", route.CreateInterval)
-			v1.POST("/intervals/stop", route.StopInterval)
+			v1.PUT("/intervals/:id", route.StopInterval)
 			v1.GET("/intervals", route.GetIntervals)
 			v1.GET("/intervals/:id", route.GetInterval)
 
